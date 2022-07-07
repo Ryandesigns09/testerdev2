@@ -409,6 +409,12 @@ hr {
 	border-radius: 5px;
 }
 
+#taag_font_Banner3 {
+	font-size: 16px;
+	width:  100%;
+	padding-bottom: 25px;
+}
+
 .speech-bubble:after {
 	content: '';
 	position: absolute;
@@ -439,4 +445,19 @@ hr {
 	.learn-bar > .learn {
 		left: 8px;
 	}
+}
+
+
+
+@media (max-width: 899px) {
+.crt {
+	width: 90%;
+	display:  block;
+}
+
+.monitor {
+	width:  100%;
+}
+
+
 }

@@ -21,11 +21,11 @@
 	<% if (whitelist_out) { %>
 
 <p>Welcome, <%= user.username || user.username %></p>
-<p>Thank you for your interest in enlisiting for duty.</p>
-<p>We are proud to announce that you have successfully been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #enlistedforduty to let others know you will be helping save the turtles.</p>	
+<p>Thank you for your interest in helping save the turtles.</p>
+<p>We are proud to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
 <img class="battlebadge" src="<%= user.name %>">
 
-<p>Lastly, we will also require your wallet address to add you to the whitelist. </p>
+<p>Lastly, we will also require your wallet address to add you to the whitelist database.</p>
 
 				<form action="/" method="post">
 					<input class="new-todo" name="title" placeholder="Enter you wallet address and hit enter" autofocus>
@@ -114,12 +114,12 @@
 	                tempTypeSpeed = 0;
 	            }
 	            else {
-	                tempTypeSpeed = (Math.random() * typeSpeed) + 50;
+	                tempTypeSpeed = (Math.random() * typeSpeed) + 35;
 	            }
 	            t.innerHTML += HTML[cursorPosition];
 	        }
 	        if (writingTag === true && HTML[cursorPosition] === ">") {
-	            tempTypeSpeed = (Math.random() * typeSpeed) + 50;
+	            tempTypeSpeed = (Math.random() * typeSpeed) + 35;
 	            writingTag = false;
 	            if (tagOpen) {
 	                var newSpan = document.createElement("span");
