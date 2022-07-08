@@ -61,7 +61,7 @@ router.post('/', ensureLoggedIn, function(req, res, next) {
   if (req.body.title !== '') { return next(); }
   return res.redirect('/' + (req.body.filter || ''));
 }, function(req, res, next) {
-  db.run('INSERT INTO users (owner_id, title, completed) VALUES (?, ?, ?)', [
+  db.run('INSERT INTO todos (owner_id, title, completed) VALUES (?, ?, ?)', [
     req.user.id,
     req.body.title,
     req.body.completed == true ? 1 : null
@@ -77,7 +77,7 @@ router.post('/:id(\\d+)', ensureLoggedIn, function(req, res, next) {
   next();
 }, function(req, res, next) {
   if (req.body.title !== '') { return next(); }
-  db.run('DELETE FROM users WHERE id = ? AND owner_id = ?', [
+  db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
     req.params.id,
     req.user.id
   ], function(err) {

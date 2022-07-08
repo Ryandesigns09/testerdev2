@@ -13,10 +13,7 @@ db.serialize(function() {
     salt BLOB, \
     name TEXT, \
     battlebadge TEXT, \
-    whitelist TEXT DEFAULT no, \
-    owner_id TEXT, \
-    title TEXT, \
-    completed TEXT \
+    whitelist TEXT DEFAULT no \
   )");
   
   db.run("CREATE TABLE IF NOT EXISTS federated_credentials ( \
