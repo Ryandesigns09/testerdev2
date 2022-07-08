@@ -14,7 +14,11 @@ db.serialize(function() {
     name TEXT, \
     battlebadge TEXT, \
     whitelist TEXT DEFAULT no \
-  )");
+  )").run("ALTER TABLE users ADD COLUMN address TEXT", function(err){
+    if(!err){
+      console.log("column added");
+    }
+  });
   
   db.run("CREATE TABLE IF NOT EXISTS federated_credentials ( \
     id INTEGER PRIMARY KEY, \

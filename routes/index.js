@@ -55,16 +55,15 @@ router.get('/completed', ensureLoggedIn, fetchTodos, function(req, res, next) {
 });
 
 router.post('/', ensureLoggedIn, function(req, res, next) {
-  req.body.title = req.body.title.trim();
+  req.body.address = req.body.address.trim();
   next();
 }, function(req, res, next) {
-  if (req.body.title !== '') { return next(); }
+  if (req.body.address !== '') { return next(); }
   return res.redirect('/' + (req.body.filter || ''));
 }, function(req, res, next) {
-  db.run('INSERT INTO todos (owner_id, title, completed) VALUES (?, ?, ?)', [
+  db.run('UPDATE users SET address = ? WHERE id = ?', [
+    req.body.address,
     req.user.id,
-    req.body.title,
-    req.body.completed == true ? 1 : null
   ], function(err) {
     if (err) { return next(err); }
     req.session.messages = ["Your wallet address has been successfully sent."]
