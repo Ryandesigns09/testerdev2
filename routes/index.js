@@ -67,6 +67,7 @@ router.post('/', ensureLoggedIn, function(req, res, next) {
     req.body.completed == true ? 1 : null
   ], function(err) {
     if (err) { return next(err); }
+    req.session.messages = ["Your wallet address has been successfully sent."]
     return res.redirect('/' + (req.body.filter || ''));
   });
 });

@@ -19,23 +19,24 @@
     <div id="typewriter" class="text-shadow command">
 
 	<% if (whitelist_out) { %>
+		<% if (hasMessages) { %>
+			<p><%=  messages[0] %></p>
+		<% } else { %>
+			<p>Welcome, <%= user.username || user.username %></p>
+			<p>Thank you for your interest in helping save the turtles.</p>
+			<p>We are proud to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
+			<img class="battlebadge" src="<%= user.name %>">
 
-<p>Welcome, <%= user.username || user.username %></p>
-<p>Thank you for your interest in helping save the turtles.</p>
-<p>We are proud to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
-<img class="battlebadge" src="<%= user.name %>">
+			<p>Lastly, we will also require your wallet address to add you to the whitelist database.</p>
 
-<p>Lastly, we will also require your wallet address to add you to the whitelist database.</p>
-
-				<form action="/" method="post">
-					<input class="new-todo" name="title" placeholder="Enter you wallet address and hit enter" autofocus>
-					<% if (filter) { %>
-					<input type="hidden" name="filter" value="<%= filter %>"/>
-					<% } %>
-					<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-				</form>
-
-
+			<form action="/" method="post">
+				<input class="new-todo" name="title" placeholder="Enter you wallet address and hit enter" autofocus>
+				<% if (filter) { %>
+				<input type="hidden" name="filter" value="<%= filter %>"/>
+				<% } %>
+				<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+			</form>
+		<% } %>
 	<% } else{ %>
 
 <p>	Welcome, <%= user.username || user.username %></p>
@@ -96,16 +97,31 @@
 
 	        if (HTML[cursorPosition] === "<") {
 	            tempTypeSpeed = 0;
-	            if (tagOpen) {
-	                tagOpen = false;
-	                writingTag = true;
-	            } else {
-	                tag = "";
-	                tagOpen = true;
-	                writingTag = true;
-	                tag += HTML[cursorPosition];
-	            }
+	            
+				if( ["form", "input"].some(el => String(tag).includes(el))){
+					tagOpen = true;
+					writingTag = true;
+				} else {
+					if (tagOpen) {
+						tagOpen = false;
+						writingTag = true;
+					} else {
+						tag = "";
+						tagOpen = true;
+						writingTag = true;
+						tag += HTML[cursorPosition];
+					}
+				}
 	        }
+			if( ["form", "input"].some(el => String(tag).includes(el))){
+				tempTypeSpeed = 0;
+				writingTag = true;
+				if(tag.includes("</form>")){
+					t.innerHTML += tag;
+					tag = "";
+					tagOpen = false;
+				}
+			}
 	        if (!writingTag && tagOpen) {
 	            tag.innerHTML += HTML[cursorPosition];
 	        }
@@ -120,13 +136,26 @@
 	        }
 	        if (writingTag === true && HTML[cursorPosition] === ">") {
 	            tempTypeSpeed = (Math.random() * typeSpeed) + 35;
-	            writingTag = false;
-	            if (tagOpen) {
-	                var newSpan = document.createElement("span");
-	                t.appendChild(newSpan);
-	                newSpan.innerHTML = tag;
-	                tag = newSpan.firstChild;
-	            }
+				if(["form", "input"].some(el => String(tag).includes(el))){
+						writingTag = true;
+						tagOpen=true
+				} else {
+					if(["img"].some(el => String(tag).includes(el))){
+						tagOpen= true;
+					}
+					writingTag = false;
+					if (tagOpen) {
+						var newSpan = document.createElement("span");
+						t.appendChild(newSpan);
+						newSpan.innerHTML = tag;
+						if(["img"].some(el => String(tag).includes(el))){
+							tag = "";
+							tagOpen = false;
+						} else {
+							tag = newSpan.firstChild;
+						}
+					}
+				}
 	        }
 
 	        cursorPosition += 1;
