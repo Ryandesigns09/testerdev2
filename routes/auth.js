@@ -80,7 +80,7 @@ passport.use(new TwitterStrategy({
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username, name: user.name, whitelist: user.whitelist, battlebadge: user.battlebadge, subjectL user.subject });
+    cb(null, { id: user.id, username: user.username, name: user.name, whitelist: user.whitelist, battlebadge: user.battlebadge, subject: user.subject });
   });
 });
 
