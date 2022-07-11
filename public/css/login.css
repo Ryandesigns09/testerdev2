@@ -9,14 +9,18 @@
 
 button {
 	display: block;
-	padding: 10px;
+	padding: 5px 10px;
 	width: 100%;
 	border-radius: 3px;
-	background: #d83f45;
-	font-size: 14px;
+	background: transparent;
+	font-size: 24px;
+	text-transform: uppercase;
+	margin-top: 15px;
 	font-weight: 700;
-	color: white;
+	 font-family:"VT323",monospace;
+	color: red;
 	cursor: pointer;
+	border:  1px solid red;
 }
 
 a.button {
@@ -49,9 +53,6 @@ a.twitter {
 	background: #1da1f2;
 }
 
-button:hover {
-	background-color: #c83f45;
-}
 
 h1 {
 	margin: 0 0 20px 0;

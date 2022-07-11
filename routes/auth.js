@@ -6,20 +6,18 @@ var db = require('../db');
 
 
 function jitProvision(provider, profile, cb) {
-  db.get('SELECT * FROM users WHERE provider = ? AND subject = ?', [
-    provider,
+  db.get('SELECT * FROM federated_credentials WHERE subject = ?', [
     profile.id
   ], function(err, row) {
     if (err) { return cb(err); }
     if (!row) {
       db.run('INSERT INTO users (name, username) VALUES (?, ?)', [
-        profile.displayName,
+        profile.id,
         profile.username
-              
       ], function(err) {
         if (err) { return cb(err); }
         var id = this.lastID;
-        db.run('INSERT INTO users (user_id, provider, subject) VALUES (?, ?, ?)', [
+        db.run('INSERT INTO federated_credentials (user_id, provider, subject) VALUES (?, ?, ?)', [
           id,
           provider,
           profile.id
@@ -33,7 +31,7 @@ function jitProvision(provider, profile, cb) {
         });
       });
     } else {
-      db.get('SELECT * FROM users WHERE id = ?', [ row.user_id ], function(err, row) {
+      db.get('SELECT * FROM federated_credentials WHERE id = ?', [ row.user_id ], function(err, row) {
         if (err) { return cb(err); }
         if (!row) { return cb(null, false); }
         return cb(null, row);
@@ -45,7 +43,7 @@ function jitProvision(provider, profile, cb) {
 passport.use(new TwitterStrategy({
     consumerKey:  "qjmAaQarYKSqEJ1Pf3qu5FXFD",
     consumerSecret: "ZJk1TNnSa7fXCalCLAixDIjXLNtjpAEMDMPGP9bwxFpeZLdHyX",
-    callbackURL: "https://bubble-impossible-topaz.glitch.me/oauth/callback/twitter"
+    callbackURL: "http://127.0.0.1:3000/oauth/callback/twitter"
 }, function verify(token, tokenSecret, profile, cb) {
   return jitProvision('https://twitter.com', profile, function(err, user) {
     if (err) { return cb(err); }
@@ -65,7 +63,11 @@ passport.use(new TwitterStrategy({
     if (profile.whitelist) {
       cred.whitelist = profile.whitelist;
     }    
-        if (profile.battlebadge) {
+    if (profile.subject) {
+      cred.subject = profile.subject;
+    }    
+
+    if (profile.battlebadge) {
       cred.battlebadge = profile.battlebadge;
     }    
 
