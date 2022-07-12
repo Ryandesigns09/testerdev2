@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 .battlebadge {
-  width: 400px;
-  height:  400px;
+  width: 275px;
+  height:  275px;
 }
 
 
@@ -62,7 +62,7 @@
 .monitor {
   margin: auto;
 	margin-top: 50px;
-  padding: 5.5vmin 5.5vmin 3.5vmin 5.5vmin;
+  padding: 5.5vmin 5.5vmin 2vmin 5.5vmin;
   width: min-content;
   display: flex;
   flex-direction: column;
@@ -91,9 +91,16 @@
   background-image: radial-gradient(ellipse, #05321e 0%, #050505 90%);
   animation: txt-shadow 1.6s infinite;
   width: 100ch;
-  height: calc(100ch * 0.8);
+  height: calc(100ch * 0.875);
   display: flex;
   margin: 0 auto;
+}
+
+.downloadgif {
+  text-align: center;
+    margin: auto;
+    display: block;
+    padding-top: 15px;
 }
 
 img {
@@ -287,11 +294,12 @@ img {
  box-shadow: none;
  padding: 0;
  letter-spacing: .1em;
- font-size: 24px;
+ font-size: 20px;
  -webkit-font-smoothing: none;
- line-height: 24px;
- width:  140%;
+ line-height: 22px;
+ width:  100%;
  text-transform: uppercase;
+  padding: 15px;
 }
 
 a {
@@ -454,15 +462,89 @@ hr {
 
 
 
-@media (max-width: 899px) {
+@media (max-width: 810px) {
 .crt {
 	width: 90%;
-	display:  block;
+	display:  inline;
+  height: 750px;
 }
 
 .monitor {
-	width:  100%;
+  width: 95% !important;
+    margin: auto;
+    margin-top: 50px;
+    padding: 0;
+    width: min-content;
+    display: block;
+    background: transparent;
+    border-radius: 30;
+    height: 750px;
+
+}
+  
+  .screen {
+    width: 90%;
+    position: relative;
+    border-image-slice: 30 fill;
+    border-image-outset: 0;
+    overflow: inherit;
+    margin: auto;
+    min-height: 750px;
+      height: auto;
+}
+  
+  .command {
+    width: 95%;
+    
+  }
+
+  
+  #taag_font_Banner3 {
+    font-size: 10px;
+    display: block;
 }
 
+}
 
+ @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  
+ 
+ 
+.monitor {
+  width: 100% !important;
+    margin: auto;
+    margin-top: 50px;
+    padding: 0;
+    width: min-content;
+    display: block;
+    background: transparent;
+    border-radius: 30;
+} 
+  
+  .crt {
+    height: 980px;
+  }
+  
+  .screen {
+    height: 980px;
+  }
+  
+  .command {
+    width: 100%;
+    height: 980px;
+  }
+  
+  
+}
+
+    @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+.crt::before { 
+  
+  height: 880px;
+      }
+      
+      .crt {
+        display: table !important;
+      }
+      
 }

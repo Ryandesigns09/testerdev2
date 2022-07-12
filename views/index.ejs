@@ -25,10 +25,9 @@
 			<p>Welcome, <%= user.username || user.username %></p>
 			<p>Thank you for your interest in helping save the turtles.</p>
 			<p>We are happy to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
-			<img class="battlebadge" src="https://cdn.glitch.global/11459ece-5951-49de-a31d-b6951aa6bab3/<%= user.name %>.gif">
-			<a href="https://cdn.glitch.global/11459ece-5951-49de-a31d-b6951aa6bab3/<%= user.name %>.gif" target="_blank">Download GIF</a>
+			<img class="battlebadge" src="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif">
+			<a class="downloadgif" href="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif" target="_blank">Download GIF</a>
 			<p>Lastly, we will also require your wallet address to add you to the whitelist database. You can only submit one wallet. If you submit a new one it will overwrite any existing wallet submitted.</p>
-
 			<form action="/" method="post">
 				<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
 				<% if (filter) { %>
@@ -63,10 +62,6 @@
 
 </div>
 			
-
-
-
-
 
 <section>
 
@@ -129,12 +124,12 @@
 	                tempTypeSpeed = 0;
 	            }
 	            else {
-	                tempTypeSpeed = (Math.random() * typeSpeed) + 35;
+	                tempTypeSpeed = (Math.random() * typeSpeed) + 10;
 	            }
 	            t.innerHTML += HTML[cursorPosition];
 	        }
 	        if (writingTag === true && HTML[cursorPosition] === ">") {
-	            tempTypeSpeed = (Math.random() * typeSpeed) + 35;
+	            tempTypeSpeed = (Math.random() * typeSpeed) + 10;
 				if(["form", "input"].some(el => String(tag).includes(el))){
 						writingTag = true;
 						tagOpen=true

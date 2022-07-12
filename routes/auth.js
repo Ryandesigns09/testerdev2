@@ -43,7 +43,7 @@ function jitProvision(provider, profile, cb) {
 passport.use(new TwitterStrategy({
     consumerKey:  "qjmAaQarYKSqEJ1Pf3qu5FXFD",
     consumerSecret: "ZJk1TNnSa7fXCalCLAixDIjXLNtjpAEMDMPGP9bwxFpeZLdHyX",
-    callbackURL: "http://127.0.0.1:3000/oauth/callback/twitter"
+    callbackURL: "https://bubble-impossible-topaz.glitch.me/oauth/callback/twitter"
 }, function verify(token, tokenSecret, profile, cb) {
   return jitProvision('https://twitter.com', profile, function(err, user) {
     if (err) { return cb(err); }

@@ -66,7 +66,7 @@ router.post('/', ensureLoggedIn, function(req, res, next) {
     req.user.id,
   ], function(err) {
     if (err) { return next(err); }
-    req.session.messages = ["Your wallet address has been successfully submitted."]
+    req.session.messages = ["Your wallet address has been successfully submitted. Please refresh the page if you wish to redownload your battle badge or resubmit your wallet"]
     return res.redirect('/' + (req.body.filter || ''));
   });
 });
@@ -89,36 +89,6 @@ router.post('/:id(\\d+)', ensureLoggedIn, function(req, res, next) {
     req.body.completed !== undefined ? 1 : null,
     req.params.id,
     req.user.id
-  ], function(err) {
-    if (err) { return next(err); }
-    return res.redirect('/' + (req.body.filter || ''));
-  });
-});
-
-router.post('/:id(\\d+)/delete', ensureLoggedIn, function(req, res, next) {
-  db.run('DELETE FROM todos WHERE id = ? AND owner_id = ?', [
-    req.params.id,
-    req.user.id
-  ], function(err) {
-    if (err) { return next(err); }
-    return res.redirect('/' + (req.body.filter || ''));
-  });
-});
-
-router.post('/toggle-all', ensureLoggedIn, function(req, res, next) {
-  db.run('UPDATE todos SET completed = ? WHERE owner_id = ?', [
-    req.body.completed !== undefined ? 1 : null,
-    req.user.id
-  ], function(err) {
-    if (err) { return next(err); }
-    return res.redirect('/' + (req.body.filter || ''));
-  });
-});
-
-router.post('/clear-completed', ensureLoggedIn, function(req, res, next) {
-  db.run('DELETE FROM todos WHERE owner_id = ? AND completed = ?', [
-    req.user.id,
-    1
   ], function(err) {
     if (err) { return next(err); }
     return res.redirect('/' + (req.body.filter || ''));
