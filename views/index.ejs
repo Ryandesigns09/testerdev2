@@ -31,7 +31,9 @@
 					<% if (hasMessages) { %>
 						<p><%=  messages[0] %></p>
 					<% } else { %>
-						<p>Congrats, you've been whitelisted, please keep your eyes peeled on your twitter dm's for your battle badge. in the meantime, please submit your wallet</p>
+            <p>Congrats <%= user.username || user.username %>,</p> 
+            <p>Thank you for your interest in enlisting for battle and helping save turtle island from the evil eight. We are pleased to announced you have been whitelisted.</p> 
+                <p>Please keep your eyes peeled on your twitter dm's for your battle badge. in the meantime, please submit your wallet using the field below.</p>
 
 						<form action="/" method="post">
 							<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
