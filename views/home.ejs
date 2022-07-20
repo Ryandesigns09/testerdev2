@@ -24,6 +24,9 @@
   <div class="screen">
     <div class="crt">
     <div id="typewriter" class="text-shadow command">
+		<% if (typeof number != "undefined" && number) { %>
+			welcome to the page, please <a href="/login/federated/twitter/?number=<%=number%>">Sign in with Twitter</a> and you'll become whitelisted.
+		<% } else { %>
 <pre id="taag_font_Banner3" style="float:left;" class="fig" contenteditable="true">######## ##     ## ########  ########  ######  
    ##    ##     ## ##     ##    ##    ##    ## 
    ##    ##     ## ##     ##    ##    ##       
@@ -47,6 +50,7 @@
   Please <a href="/login/federated/twitter">Sign in with Twitter</a> to see if you have been selected to help fight the battle. 
 
     </div>
+	<% } %>
     </div>
     <div class="scan-line"></div>
   </div>

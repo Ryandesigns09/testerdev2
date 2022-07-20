@@ -39,9 +39,12 @@ app.use(csrf());
 app.use(passport.authenticate('session'));
 app.use(function(req, res, next) {
   var msgs = req.session.messages || [];
+  var number = req.session.number || "";
   res.locals.messages = msgs;
   res.locals.hasMessages = !! msgs.length;
+  res.locals.number = number;
   req.session.messages = [];
+  req.session.number = "";
   next();
 });
 app.use(function(req, res, next) {

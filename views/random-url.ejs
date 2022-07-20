@@ -25,50 +25,27 @@
   <div class="screen">
     <div class="crt">
     <div id="typewriter" class="text-shadow command">
-	
-			<% if (whitelist_out) { %>
-				<% if (typeof random_number != "undefined" && random_number) { %>
-					<% if (hasMessages) { %>
-						<p><%=  messages[0] %></p>
-					<% } else { %>
-						<p>Congrats, you've been whitelisted, please keep your eyes peeled on your twitter dm's for your battle badge. in the meantime, please submit your wallet</p>
+        <p>random url</p>
 
-						<form action="/" method="post">
-							<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
-							<% if (filter) { %>
-							<input type="hidden" name="filter" value="<%= filter %>"/>
-							<% } %>
-							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-						</form>
-					<% } %>
-				<% } else{ %>
-					<% if (hasMessages) { %>
-						<p><%=  messages[0] %></p>
-					<% } else { %>
-						<p>Welcome, <%= user.username || user.username %></p>
-						<p>Thank you for your interest in helping save the turtles.</p>
-						<p>We are happy to announce that you have been selected for duty. Attached below is your battle badge. Share on social media using the hashtag #savetheturts to let others know you'll be doing your part to try and stop the rainbow meteor.</p>	
-						<img class="battlebadge" src="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif">
-						<a class="downloadgif" href="https://cdn.glitch.me/9c9936f5-2393-4bdf-b7c8-4a1b138d9bb7/<%= user.name %>.gif" target="_blank">Download GIF</a>
-						<p>Lastly, we will also require your wallet address to add you to the whitelist database. You can only submit one wallet. If you submit a new one it will overwrite any existing wallet submitted.</p>
-						<form action="/" method="post">
-							<input class="new-todo" name="address" placeholder="Enter you wallet address and hit enter" autofocus>
-							<% if (filter) { %>
-							<input type="hidden" name="filter" value="<%= filter %>"/>
-							<% } %>
-							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-						</form>
-					<% } %>
-				<% } %>
-			<% } else{ %>
+        <form action="/random-url" method="post">
+            <input class="new-todo" name="number" placeholder="Enter a random number" autofocus>
+            
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
 
-				<p>	Welcome, <%= user.username || user.username %></p>
-
-				<p>Thank you for your interest in enlisiting for duty.</p>
-
-				<p>Sorry, you have not yet been selected for duty. Check back daily to see if you have been selected</p>
-			<% } %>
-		
+        <% random_numbers.forEach(function(random) { %>
+            <form action="/random-url<%= random.url %>" method="post">
+                <div class="random_number">
+                    <p><%= random.number %></p>
+                    <button class="destroy" form="delete-<%= random.id %>">Delete</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                </div>
+            </form>
+            <form id="delete-<%= random.id %>" action="/random-url<%= random.url %>/delete" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+        <% }); %>
+        
     </div>
 
 
@@ -79,9 +56,9 @@
   </div>
 
 	<form action="/logout" method="post">
-							<button type="submit">Log out</button>
-							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-						</form>
+        <button type="submit">Log out</button>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    </form>
 
 </div>
 			

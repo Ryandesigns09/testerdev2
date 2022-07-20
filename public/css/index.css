@@ -352,6 +352,18 @@ html .clear-completed:active {
 	text-decoration: underline;
 }
 
+.random_number{
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+}
+
+.random_number button{
+	width: auto;
+	margin: 0px;
+	margin-left: 15px;
+}
+
 /*
 	Hack to remove background from Mobile Safari.
 	Can't use it globally since it destroys checkboxes in Firefox

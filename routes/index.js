@@ -25,6 +25,14 @@ function fetchTodos(req, res, next) {
   });
 }
 
+function checkOwner(req, res, next){
+  if(req.user.username == 'eternalturt'){
+    next();
+  } else {
+    res.redirect('/');
+  }
+}
+
 var router = express.Router();
 
 /* GET home page. */
@@ -39,7 +47,15 @@ router.get('/', function(req, res, next) {
     whitelist_out = false
   }
   res.locals.filter = null;
-  res.render('index', { user: req.user,  whitelist_out: whitelist_out });
+
+  db.get("SELECT * FROM users_random_numbers WHERE user_id = ?", [req.user.id], function (err, row) {
+    if(row) {
+      return res.render('index', { user: req.user,  whitelist_out: whitelist_out, random_number: true });
+    }
+    
+    return res.render('index', { user: req.user,  whitelist_out: whitelist_out });
+  })
+  
 });
 
 router.get('/active', ensureLoggedIn, fetchTodos, function(req, res, next) {
@@ -53,6 +69,32 @@ router.get('/completed', ensureLoggedIn, fetchTodos, function(req, res, next) {
   res.locals.filter = 'completed';
   res.render('index', { user: req.user });
 });
+
+router.get('/random-url', ensureLoggedIn, checkOwner, function(req, res, next) {  
+  db.all('SELECT * FROM random_numbers', [], function(err, rows) {
+    if (err) { return next(err); }
+    var random_numbers = rows.map(function(row) {
+      return {
+        id: row.id,
+        number: row.number,
+        url: '/' + row.id
+      }
+    });
+    res.locals.random_numbers = random_numbers;
+    res.render('random-url');
+  });
+})
+
+router.get('/:number', function(req, res){
+  const number = req.params.number;
+  db.get("SELECT * FROM random_numbers WHERE number = ?", [number], function (err, row) {
+    if(row){
+      res.render('home', { number: number});
+    } else {
+      res.redirect('/');
+    }
+  })
+})
 
 router.post('/', ensureLoggedIn, function(req, res, next) {
   req.body.address = req.body.address.trim();
@@ -92,6 +134,38 @@ router.post('/:id(\\d+)', ensureLoggedIn, function(req, res, next) {
   ], function(err) {
     if (err) { return next(err); }
     return res.redirect('/' + (req.body.filter || ''));
+  });
+});
+
+router.post('/random-url', ensureLoggedIn, checkOwner, function(req, res, next) {
+  req.body.number = req.body.number.trim();
+  next();
+}, function(req, res, next) {
+  if (req.body.number !== '') { return next(); }
+  return res.redirect('/random-url');
+}, function(req, res, next) {
+  db.run('INSERT INTO random_numbers (number) VALUES (?)', [
+    req.body.number
+  ], function(err) {
+    if (err) { return next(err); }
+    
+    return res.redirect('/random-url');
+  });
+});
+
+router.post('/random-url/:id(\\d+)/delete', ensureLoggedIn, checkOwner, function(req, res, next) {
+  db.run('DELETE FROM random_numbers WHERE id = ? ', [
+    req.params.id,
+  ], function(err) {
+    if (err) { return next(err); }
+
+    db.run('DELETE FROM users_random_numbers WHERE random_number_id = ? ', [
+      req.params.id
+    ], function(err) {
+      if (err) { return next(err); }
+
+      return res.redirect('/random-url');
+    });
   });
 });
 
