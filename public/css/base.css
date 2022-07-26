@@ -283,6 +283,16 @@ img {
   100%  { text-shadow: 2.6208764473832513px 0 1px rgba(0,30,255,0.5), -2.6208764473832513px 0 1px rgba(255,0,80,0.3), 0 0 3px; }
 }
 
+.montext {
+  color:rgb(50,255,0);
+ font-family:"VT323",monospace;
+ letter-spacing: .1em;
+ font-size: 20px;
+ -webkit-font-smoothing: none;
+ text-transform: uppercase;
+  text-align: center;  
+
+}
 
 
 .command {
